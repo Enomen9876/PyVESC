@@ -18,7 +18,7 @@ class VescApp:
         self.is_running = False
         self.last_command = "stopped"
 
-        # --- UI PRVKY ---
+        # --- UI ELEMENTS ---
         tk.Label(root, text="Cílové RPM (VESC same):").pack(pady=4)
         self.rpm_input = tk.Entry(root, justify="center")
         self.rpm_input.insert(0, "500")
@@ -75,14 +75,14 @@ class VescApp:
                         if self.root.winfo_exists():
                             self.root.after(0, self.update_ui_text, txt)
                 else:
-                    # Pokud data nepřišla, nekonči smyčku, jen počkej
+                    # If no data received, don't break loop; just wait
                     print("Data z VESC jsou dočasně nedostupná...")
             except Exception as e:
                 print(f"Update loop error: {e}")
-                # Místo break zkusíme krátce počkat
+                # Instead of break, wait briefly
                 time.sleep(1) 
         
-            time.sleep(0.1) # Frekvence obnovování 10Hz
+            time.sleep(0.1) # Refresh rate 10Hz
 
     def update_ui_text(self, txt):
         try:

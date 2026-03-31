@@ -48,14 +48,14 @@ class MotorController:
         return wheel_rpm * config.POLE_PAIRS
 
     def set_speed_rpm(self, wheel_rpm: float):
-        # 1. Vynutíme bezpečné limity (pracujeme ve Wheel RPM)
+        # 1. Enforce safe limits (working in wheel RPM)
         safe_wheel_rpm = self.safety.enforce_wheel_rpm(wheel_rpm)
         
-        # 2. Pošleme to do odometrie, která se postará o převod na ERPM
+        # 2. Pass to odometry, which handles conversion to ERPM
         if hasattr(self.odom, 'set_speed'):
             self.odom.set_speed(safe_wheel_rpm)
             
-        # Pro UI vrátíme informativní hodnotu ERPM (co reálně vidí VESC)
+        # Return informative ERPM value for UI (what VESC actually sees)
         return safe_wheel_rpm * config.GEAR_RATIO * config.POLE_PAIRS
 
     def set_speed_m_s(self, speed_m_s: float):

@@ -16,13 +16,13 @@ class VescControll:
                 print("Chyba: Port není definován v config.py")
                 return False
 
-            # Přidáme start_heartbeat=False, aby se neprala vlákna při inicializaci
+            # Add start_heartbeat=False to avoid thread conflicts during initialization
             self.vesc = VESC(serial_port=self.serial_port, baudrate=self.baudrate, start_heartbeat=False)
             time.sleep(0.5) 
 
             for i in range(5):
-                print(f"Pokus o čtení dat {i+1}/5...")
-                data = self.get_data() # Teď už metoda existuje níže
+                print(f"Attempting to read data {i+1}/5...")
+                data = self.get_data() # Method exists below now
                 if data:
                     self._tacho_zero = data['raw_tacho']
                     print("VESC komunikuje správně.")
@@ -47,11 +47,11 @@ class VescControll:
                 tacho_raw = getattr(data, 'tachometer', 0)
                 voltage = getattr(data, 'v_in', 0)
 
-                # Přepočty
+                # Conversions
                 wheel_rpm = rpm_raw / (config.POLE_PAIRS * config.GEAR_RATIO)
                 wheel_speed_ms = (wheel_rpm * config.WHEEL_CIRCUMFERENCE) / 60.0
                 
-                # Odometrie (relativní od startu nebo resetu)
+                # Odometry (relative from start or reset)
                 odo_rotations = (tacho_raw - self._tacho_zero) / (config.POLE_PAIRS * config.GEAR_RATIO * config.TACHO_FACTOR)
                 odo_distance_m = odo_rotations * config.WHEEL_CIRCUMFERENCE
 
@@ -85,7 +85,7 @@ class VescControll:
         data = self.get_data()
         if data:
             current_tacho = data['raw_tacho']
-            # Vypočítáme offset tak, aby ujetá vzdálenost odpovídala zadání
+            # Calculate offset so traveled distance matches target
             self._tacho_zero = current_tacho - self._to_tacho_raw(new_distance_m)
 
     def set_speed(self, wheel_rpm):
