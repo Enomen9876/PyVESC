@@ -37,7 +37,6 @@ class VescControll:
             print(f"Chyba připojení k VESC: {e}")
             return False
 
-    # TATO METODA TI CHYBĚLA:
     def get_data(self):
         if not self.vesc:
             return None
@@ -53,7 +52,7 @@ class VescControll:
                 wheel_speed_ms = (wheel_rpm * config.WHEEL_CIRCUMFERENCE) / 60.0
                 
                 # Odometrie (relativní od startu nebo resetu)
-                odo_rotations = (tacho_raw - self._tacho_zero) / (config.POLE_PAIRS * config.GEAR_RATIO)
+                odo_rotations = (tacho_raw - self._tacho_zero) / (config.POLE_PAIRS * config.GEAR_RATIO * config.TACHO_FACTOR)
                 odo_distance_m = odo_rotations * config.WHEEL_CIRCUMFERENCE
 
                 self._last_data = {
@@ -93,7 +92,6 @@ class VescControll:
         if self.vesc:
             try:
                 target_erpm = int(wheel_rpm * config.GEAR_RATIO * config.POLE_PAIRS)
-                print(target_erpm)
                 self.vesc.set_rpm(target_erpm)
                 return target_erpm
             except Exception:

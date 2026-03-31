@@ -2,8 +2,12 @@
 SERIAL_PORT = "COM18"
 BAUD_RATE = 115200
 
+# Setup the 
+
+
 # Parametry motoru a mechaniky
-POLE_PAIRS = 15        # Počet párů pólů motoru (ERPM = RPM * POLE_PAIRS)
+POLE_PAIRS = 15       # Počet párů pólů motoru (ERPM = RPM * POLE_PAIRS)
+TACHO_FACTOR = 6 # 6*15 Změn/otáčku
 GEAR_RATIO = 1.0      # Převodový poměr (1.0 = přímý náhon)
 WHEEL_DIAMETER = 0.21  # Průměr kola v metrech (např. 0.1m = 10cm)
 
