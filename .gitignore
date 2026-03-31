@@ -5,3 +5,4 @@ docs/build/
 MANIFEST
 dist/
 pyvesc.egg-info/
+vesc_env/
