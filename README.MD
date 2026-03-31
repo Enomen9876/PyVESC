@@ -25,9 +25,15 @@ that PyVESC is:
 ## Documentation
 For the latest version of PyVESC's documentation [Read The Docs](http://pyvesc.readthedocs.io/en/latest/)
 
-## Contributing
-Obviously this is just a quick and dirty project; however, if you have any ideas,
-critiques or changes just let me know or submit a pull request.
+## Contribution
+I used the library to control the driver based on VESC. The app is written mainly by LLM.
+- files in the control folder and the main_gui.py
+
+### Setup for the controller
+First, you need to use the VESC software mentioned above - set up the constants in the driver (especially min ERPM, dia, e.g.)
+Next, you need to configure the config.py - using the same constants (in the future it can be read by the controller itself - but not for now).
+Then run the main_gui.py - there is a dashboard, and first try to rotate the wheel by hand to see if the parameters are correct!
+
 
 ## License
 Just like VESC, PyVESC is distributed under a
